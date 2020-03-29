@@ -1,23 +1,7 @@
 package ru.skillbranch.devintensive.extensions
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import ru.skillbranch.devintensive.R
-import java.lang.IllegalStateException
-import java.security.AccessController.getContext
 import java.text.SimpleDateFormat
-import java.time.*
-import java.time.chrono.ChronoLocalDate
-import java.time.chrono.ChronoLocalDateTime
-import java.time.chrono.ChronoPeriod
-import java.time.temporal.ChronoUnit
-import java.time.temporal.TemporalAccessor
 import java.util.*
-import java.util.concurrent.TimeUnit
-import kotlin.time.Duration
-import kotlin.time.days
-import kotlin.time.hours
-import kotlin.time.seconds
 
 const val SECOND = 1000L
 const val MINUTE = 60 * SECOND
