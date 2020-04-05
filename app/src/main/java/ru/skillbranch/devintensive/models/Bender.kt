@@ -12,18 +12,20 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     }
 
     fun listenAnswer(answer:String) : Pair<String, Triple< Int, Int, Int>>{
-        return if (question.answers.contains(answer)){
+        return (if (question.answers.contains(answer)){
             question = question.nextQuestion()
-              "Отлично - ты справился\n${question.question}" to status.color
-        }
-        else{
-            var ans = "Это неправильный ответ\\n"
+            "Отлично - ты справился\n${question.question}" to status.color
+        } else{
             if (status.equals(Status.CRITICAL)){
-                ans = "Это неправильный ответ. Давай все по новой"
+                status = status.nextStatus()
+                question = question.nextQuestion()
+                "Это неправильный ответ. Давай все по новой\n" +
+                        "${question.question}"
+            } else {
+                status = status.nextStatus()
+                "Это неправильный ответ\n${question.question}" to status.color
             }
-            status = status.nextStatus()
-            "$ans\n${question.question}" to status.color
-        }
+        }) as Pair<String, Triple<Int, Int, Int>>
     }
 
     enum class Status (val color: Triple<Int, Int, Int>) {
@@ -59,7 +61,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         SERIAL(question = "Мой серийный номер?", answers = listOf("2716057")){
             override fun nextQuestion(): Question = IDLE
         },
-        IDLE(question = "На этом все, вопросов больше нет.", answers = listOf()){
+        IDLE(question = "На этом все, вопросов больше нет", answers = listOf()){
             override fun nextQuestion(): Question = IDLE
         };
 
