@@ -18,14 +18,13 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         } else{
             if (status.equals(Status.CRITICAL)){
                 status = status.nextStatus()
-                question = question.nextQuestion()
-                "Это неправильный ответ. Давай все по новой\n" +
-                        "${question.question}"
+                question = Question.NAME
+                "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
             } else {
                 status = status.nextStatus()
                 "Это неправильный ответ\n${question.question}" to status.color
             }
-        }) as Pair<String, Triple<Int, Int, Int>>
+        })
     }
 
     enum class Status (val color: Triple<Int, Int, Int>) {
@@ -62,7 +61,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
             override fun nextQuestion(): Question = IDLE
         },
         IDLE(question = "На этом все, вопросов больше нет", answers = listOf()){
-            override fun nextQuestion(): Question = IDLE
+            override fun nextQuestion(): Question = NAME
         };
 
         abstract fun  nextQuestion() : Question
