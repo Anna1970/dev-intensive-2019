@@ -47,19 +47,24 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         NAME(question = "Как меня зовут?", answers = listOf("бендер","bender")){
             override fun nextQuestion(): Question = PROFESSION
         },
+
         PROFESSION(question = "Назови мою профессию?", answers = listOf("сгибальщик","bender")){
             override fun nextQuestion(): Question = MATERIAL
         },
+
         MATERIAL(question = "Из чего я сделан?",
                     answers = listOf("металл","дерево","metal","iron","wood")){
             override fun nextQuestion(): Question = BDAY
         },
+
         BDAY(question = "Когда меня создали?", answers = listOf("2993")){
             override fun nextQuestion(): Question = SERIAL
         },
+
         SERIAL(question = "Мой серийный номер?", answers = listOf("2716057")){
             override fun nextQuestion(): Question = IDLE
         },
+
         IDLE(question = "На этом все, вопросов больше нет", answers = listOf()){
             override fun nextQuestion(): Question = IDLE
         };
