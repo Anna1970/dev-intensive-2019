@@ -1,16 +1,22 @@
 package ru.skillbranch.devintensive
 
+import android.app.Activity
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import ru.skillbranch.devintensive.extensions.hideKeyboard
+import ru.skillbranch.devintensive.extensions.isKeyboardOpen
+import ru.skillbranch.devintensive.extensions.onSend
 
 import ru.skillbranch.devintensive.models.Bender
 
@@ -44,7 +50,28 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
 
         textTxt.text = benderObj.askQuestion()
+
         sendBtn.setOnClickListener(this)
+
+        messageEt.setOnEditorActionListener { _, actionId, _ ->
+
+            //Toast.makeText(applicationContext, "actionID = ${actionId},  ${EditorInfo.IME_ACTION_SEND}.", Toast.LENGTH_LONG).show()
+
+            /*if (actionId == EditorInfo.IME_ACTION_SEND) {*/
+                this.onSend(this, benderObj, messageEt, benderImage, textTxt)
+                true
+            /*} else { false }*/
+
+            //Toast.makeText(applicationContext, "actionID = ${actionId} ", Toast.LENGTH_LONG).show()
+
+            /*if (actionId == EditorInfo.IME_ACTION_DONE){
+                Toast.makeText(applicationContext, "setOnEditorActionListener", Toast.LENGTH_LONG).show()
+                /*sendBtn.performClick()*/
+                true
+            } else {
+                false
+            }*/
+        }
     }
 
     override fun onRestart() {
@@ -88,11 +115,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         if (v?.id == R.id.iv_send){
-           val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString().toLowerCase())
+
+           /*val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString()/*.toLowerCase()*/)
             messageEt.setText("")
             val (r, g, b) = color
             benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
-            textTxt.text = phrase
+            textTxt.text = phrase*/
+
+            this.onSend(this, benderObj, messageEt, benderImage, textTxt)
         }
 
     }

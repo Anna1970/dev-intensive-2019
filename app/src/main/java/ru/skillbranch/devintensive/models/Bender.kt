@@ -11,20 +11,38 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
        Question.IDLE -> Question.IDLE.question
     }
 
+    fun  validationAnswer(answer: String):String? = when(question){
+        Question.NAME -> (if (answer[0].isLowerCase()){ "Имя должно начинаться с заглавной буквы"}
+                          else null)
+        Question.PROFESSION -> (if (answer[0].isUpperCase()){ "Профессия должна начинаться со строчной буквы"}
+                                else null)
+        Question.MATERIAL -> (if (answer.any(){ it.isDigit() }){ "Материал не должен содержать цифр" }
+                              else { null })
+        Question.BDAY -> (if (!answer.all{ it.isDigit() }){ "Год моего рождения должен содержать только цифры" }
+                          else { null })
+        Question.SERIAL -> (if (!((answer.all{ it.isDigit() }) && answer.length == 7)){ "Серийный номер содержит только цифры, и их 7" }
+                                else { null })
+        Question.IDLE -> null
+    }
+
     fun listenAnswer(answer:String) : Pair<String, Triple< Int, Int, Int>>{
-        return (if (question.answers.contains(answer)){
-            question = question.nextQuestion()
-            "Отлично - ты справился\n${question.question}" to status.color
-        } else{
-            if (status.equals(Status.CRITICAL)){
-                status = status.nextStatus()
-                question = Question.NAME
-                "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
-            } else {
-                status = status.nextStatus()
-                "Это неправильный ответ\n${question.question}" to status.color
-            }
-        })
+        val result: String? = validationAnswer(answer)
+        return ( if (!result.isNullOrEmpty()) { "${result}\n${question.question}" to status.color }
+                 else {
+                        if (question.answers.contains(answer.toLowerCase())){
+                            question = question.nextQuestion()
+                            "Отлично - ты справился\n${question.question}" to status.color
+                        } else{
+                                if (status.equals(Status.CRITICAL)){
+                                    status = status.nextStatus()
+                                    question = Question.NAME
+                                    "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
+                                } else {
+                                    status = status.nextStatus()
+                                    "Это неправильный ответ\n${question.question}" to status.color
+                                }
+                            }
+                })
     }
 
     enum class Status (val color: Triple<Int, Int, Int>) {
@@ -71,4 +89,5 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
 
         abstract fun  nextQuestion() : Question
     }
+
 }
