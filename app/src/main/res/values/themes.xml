@@ -14,7 +14,7 @@
 
     </style>
 
-    <style name="AppTheme.Launcher">
+    <style name="SplashTheme">
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="colorPrimaryDark">@android:color/white</item>
     </style>
