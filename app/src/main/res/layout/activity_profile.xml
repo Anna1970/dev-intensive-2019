@@ -65,7 +65,7 @@
 
             <TextView
                 style="@style/Profile.Header.Rank"
-                android:id="@+id/tv_ranK"
+                android:id="@+id/tv_rank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_nick_name"

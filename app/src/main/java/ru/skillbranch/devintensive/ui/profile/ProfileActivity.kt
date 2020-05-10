@@ -71,7 +71,7 @@ class ProfileActivity : AppCompatActivity() {
 
         viewFields = mapOf(
             "nickname" to tv_nick_name,
-            "rank" to tv_ranK,
+            "rank" to tv_rank,
             "firstName" to et_first_name,
             "lastName" to et_last_name,
             "about" to et_about,
