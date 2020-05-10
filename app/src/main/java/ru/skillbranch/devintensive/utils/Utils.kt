@@ -51,7 +51,7 @@ object Utils {
             "ю" to "yu",
             "я" to "ya")
 
-        val parts : List<String> = payload.trim().split(" ")
+        val parts : List<String?> = payload?.trim().split(" ")
 
         var  replaced = ""
 
@@ -59,7 +59,7 @@ object Utils {
 
         for(part in parts)
         {
-            val isUpp = part[0].isUpperCase()
+            val isUpp = part!![0].isUpperCase()
 
             var str = map.entries.fold(part){
                             acc, (key, value) -> acc.replace(key, value, true)
