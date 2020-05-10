@@ -5,3 +5,16 @@ libs/
 *.iml
 src/test/
 src/androidTest
+enterprise
+features
+topics
+collections
+trending
+events
+marketplace
+pricing
+nonprofit
+customer-stories
+security
+login
+join
