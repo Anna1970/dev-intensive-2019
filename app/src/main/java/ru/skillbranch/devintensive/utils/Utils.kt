@@ -14,65 +14,65 @@ object Utils {
 
     fun transliteration(payload: String?, devider:String = " "): String {
 
-        if (payload != null){
+        if (payload.isNullOrEmpty()) return ""
 
-            val map = mapOf<String,String>(
-                "а" to "a",
-                "б" to "b",
-                "в" to "v",
-                "г" to "g",
-                "д" to "d",
-                "е" to "e",
-                "ё" to "e",
-                "ж" to "zh",
-                "з" to "z",
-                "и" to "i",
-                "й" to "i",
-                "к" to "k",
-                "л" to "l",
-                "м" to "m",
-                "н" to "n",
-                "о" to "o",
-                "п" to "p",
-                "р" to "r",
-                "с" to "s",
-                "т" to "t",
-                "у" to "u",
-                "ф" to "f",
-                "х" to "h",
-                "ц" to "c",
-                "ч" to "ch",
-                "ш" to "sh",
-                "щ" to "sh'",
-                "ъ" to "",
-                "ы" to "i",
-                "ь" to "",
-                "э" to "e",
-                "ю" to "yu",
-                "я" to "ya")
+        val map = mapOf<String,String>(
+            "а" to "a",
+            "б" to "b",
+            "в" to "v",
+            "г" to "g",
+            "д" to "d",
+            "е" to "e",
+            "ё" to "e",
+            "ж" to "zh",
+            "з" to "z",
+            "и" to "i",
+            "й" to "i",
+            "к" to "k",
+            "л" to "l",
+            "м" to "m",
+            "н" to "n",
+            "о" to "o",
+            "п" to "p",
+            "р" to "r",
+            "с" to "s",
+            "т" to "t",
+            "у" to "u",
+            "ф" to "f",
+            "х" to "h",
+            "ц" to "c",
+            "ч" to "ch",
+            "ш" to "sh",
+            "щ" to "sh'",
+            "ъ" to "",
+            "ы" to "i",
+            "ь" to "",
+            "э" to "e",
+            "ю" to "yu",
+            "я" to "ya")
 
-            val parts : List<String> = payload.trim().split(" ")
+        val parts : List<String> = payload.trim().split(" ")
 
-            var  replaced = ""
+        var  replaced = ""
 
-            for(part in parts)
-            {
-                val isUpp = part.get(0).isUpperCase()
+        if (parts.isNullOrEmpty()) return ""
 
-                var str = map.entries.fold(part){
-                                acc, (key, value) -> acc.replace(key, value, true)
-                            }
-                if (isUpp) {
-                    str =  str.first().toUpperCase() + str.drop(1)
-                }
-                if (!replaced.isNullOrEmpty()) str = devider + str
+        for(part in parts)
+        {
+            val isUpp = part[0].isUpperCase()
 
-                replaced +=  str
+            var str = map.entries.fold(part){
+                            acc, (key, value) -> acc.replace(key, value, true)
+                        }
+            if (isUpp) {
+                str =  str.first().toUpperCase() + str.drop(1)
             }
+            if (!replaced.isNullOrEmpty()) str = devider + str
 
-            return replaced
+            replaced +=  str
+        }
 
-        } else  return ""
+        return replaced
     }
 
     fun toInitials(firstName: String?, lastName: String?): String? {
