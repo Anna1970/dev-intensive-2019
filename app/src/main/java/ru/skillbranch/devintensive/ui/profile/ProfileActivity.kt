@@ -1,25 +1,34 @@
 package ru.skillbranch.devintensive.ui.profile
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_profile.*
 import androidx.lifecycle.*
+import com.google.android.material.textfield.TextInputLayout
 import ru.skillbranch.devintensive.R
+import ru.skillbranch.devintensive.extensions.hideKeyboard
 import ru.skillbranch.devintensive.extensions.onSend
 
 import ru.skillbranch.devintensive.models.Bender
 import ru.skillbranch.devintensive.models.Profile
+import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
+import java.lang.ref.WeakReference
 
 
 class ProfileActivity : AppCompatActivity() {
@@ -40,6 +49,7 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
         initViews(savedInstanceState)
         initViewModel()
+
         Log.d("M_ProfileActivity", "onCreate")
     }
 
@@ -92,6 +102,20 @@ class ProfileActivity : AppCompatActivity() {
         btn_switch_theme.setOnClickListener {
             viewModel.switchTheme()
         }
+
+        et_repository.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val isErr = !Utils.validateURL(s)
+
+                wr_repository.isErrorEnabled = isErr
+                wr_repository.error = if (isErr) "Невалидный адрес репозитория"
+                                      else ""
+            }
+        })
     }
 
     private fun showCurrentMode(isEdit: Boolean){
@@ -135,9 +159,23 @@ class ProfileActivity : AppCompatActivity() {
             firstName = et_first_name.text.toString(),
             lastName = et_last_name.text.toString(),
             about = et_about.text.toString(),
-            repository = et_repository.text.toString()
+            repository = if (wr_repository.isErrorEnabled) "" else et_repository.text.toString()
         ).apply {
             viewModel.saveProfileData(this)
         }
     }
+
+    @SuppressLint("ResourceType")
+    private fun showError() {
+        Toast.makeText(this, "showError", Toast.LENGTH_LONG).show()
+        wr_repository.error = R.string.profile_github_error.toString()
+    }
+
+    private fun hideError() {
+        Toast.makeText(this, "hideError", Toast.LENGTH_LONG).show()
+        wr_repository.error = ""
+    }
+
 }
+
+
