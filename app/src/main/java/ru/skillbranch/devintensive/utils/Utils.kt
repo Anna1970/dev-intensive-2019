@@ -61,7 +61,7 @@ object Utils {
         {
             val isUpp = part!![0].isUpperCase()
 
-            var str = map.entries.fold(part){
+            var str = map.entries.fold(part!!){
                             acc, (key, value) -> acc.replace(key, value, true)
                         }
             if (isUpp) {
@@ -77,12 +77,27 @@ object Utils {
 
     fun toInitials(firstName: String?, lastName: String?): String? {
         if (firstName.isNullOrEmpty() && lastName.isNullOrEmpty()) return null
+        return  (firstName?.trim()?.firstOrNull()?:"" + lastName?.trim()?.firstOrNull()).toString().toUpperCase()
+    }
 
-        val fn = firstName?.trim()?.firstOrNull()?:""
-        val ln = lastName?.trim()?.firstOrNull()?:""
+    fun validateURL(url: CharSequence?): Boolean {
+        val wrongNames = listOf(
+            "enterprise",
+            "features",
+            "topics",
+            "collections",
+            "trending",
+            "events",
+            "marketplace",
+            "pricing",
+            "nonprofit",
+            "customer-stories",
+            "security",
+            "login",
+            "join"
+        ).joinToString("|")
 
-        val str = fn.toString() + ln.toString()
-
-        return str.toUpperCase()
+        val pattern = Regex("""^(https://)?(www\.)?github\.com/(?!($wrongNames)/?$)[\-\w]+/?$""")
+        return url.isNullOrBlank() || pattern.matches(url)
     }
 }
