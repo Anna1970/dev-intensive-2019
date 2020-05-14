@@ -1,34 +1,25 @@
 package ru.skillbranch.devintensive.ui.profile
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_profile.*
 import androidx.lifecycle.*
-import com.google.android.material.textfield.TextInputLayout
 import ru.skillbranch.devintensive.R
-import ru.skillbranch.devintensive.extensions.hideKeyboard
-import ru.skillbranch.devintensive.extensions.onSend
 
-import ru.skillbranch.devintensive.models.Bender
 import ru.skillbranch.devintensive.models.Profile
 import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
-import java.lang.ref.WeakReference
 
 
 class ProfileActivity : AppCompatActivity() {
@@ -168,7 +159,7 @@ class ProfileActivity : AppCompatActivity() {
     @SuppressLint("ResourceType")
     private fun showError() {
         Toast.makeText(this, "showError", Toast.LENGTH_LONG).show()
-        wr_repository.error = R.string.profile_github_error.toString()
+        wr_repository.error = R.string.textinput_error.toString()
     }
 
     private fun hideError() {
