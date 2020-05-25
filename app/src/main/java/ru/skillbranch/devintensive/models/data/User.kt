@@ -1,5 +1,6 @@
-package ru.skillbranch.devintensive.models
+package ru.skillbranch.devintensive.models.data
 
+import ru.skillbranch.devintensive.extensions.humanizeDiff
 import ru.skillbranch.devintensive.utils.Utils
 import java.util.*
 
@@ -15,6 +16,24 @@ data class User (
     val isOnline: Boolean = false
     ) {
 
+    fun toUserItem() : UserItem {
+        val lastActivity = when {
+            lastVisit == null -> "Еще ни разу не заходил"
+            isOnline -> "online"
+            else -> "Последний раз был ${lastVisit.humanizeDiff()}"
+        }
+
+        return UserItem(
+            id,
+            "${firstName.orEmpty()} ${lastName.orEmpty()}",
+            Utils.toInitials(firstName, lastName),
+            avatar,
+            lastActivity,
+            false,
+            isOnline
+        )
+    }
+
 
     constructor(id: String, firstName: String?, lastName: String?) : this(
         id = id,
@@ -25,21 +44,17 @@ data class User (
 
     constructor(id: String) : this(id, "John", "Doe")
 
-    init {
-        // introBit = getIntro()
-        println(
-            "It's Alive!!! \n" +
-                    "${if (lastName === "Doe") "His name is $firstName $lastName" else "And his name is $firstName $lastName"}\n"
-        )
-    }
-
     companion object Factory{
         private var lastid : Int = -1
-        fun makeUser(fullName:String?) : User{
+        fun makeUser(fullName:String?) : User {
             lastid++
 
             val (firstName, lastName) = Utils.parseFullName(fullName)
-            return User(id = "$lastid", firstName = firstName, lastName = lastName)
+            return User(
+                id = "$lastid",
+                firstName = firstName,
+                lastName = lastName
+            )
         }
     }
 

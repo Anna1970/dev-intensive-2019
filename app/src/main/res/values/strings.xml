@@ -8,5 +8,7 @@
     <string name="profile_hint_first_name">Имя</string>
 
     <string name="textinput_error">Невалидный адрес репозитория</string>
+    <string name="menu_search_title">Поиск</string>
+    <string name="snackbar_action_no">ОТМЕНА</string>
 
 </resources>
