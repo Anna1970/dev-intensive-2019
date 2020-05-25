@@ -44,7 +44,7 @@ class UserAdapter(val listener: (UserItem) -> Unit) : RecyclerView.Adapter<UserA
         override val containerView: View?
             get() = itemView
 
-        fun bind(user:UserItem, listener: (UserItem) -> Unit){
+        fun bind(user: UserItem, listener: (UserItem) -> Unit){
             if(user.avatar != null) {
                 Glide.with(itemView)
                     .load(user.avatar)

@@ -2,6 +2,7 @@ package ru.skillbranch.devintensive.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -76,5 +77,9 @@ class MainActivity : BaseActivity() {
         viewModel.getChatData().observe(this, Observer { chatAdapter.updateData(it) })
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_search, menu)
 
+        return super.onCreateOptionsMenu(menu)
+    }
 }

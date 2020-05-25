@@ -96,7 +96,7 @@ class GroupActivity : BaseActivity() {
         else fab.hide()
     }
 
-    private fun addChipToGroup(user:UserItem) {
+    private fun addChipToGroup(user: UserItem) {
         val chip = Chip(this).apply {
             text = user.fullName
             chipIcon = resources.getDrawable(R.drawable.avatar_default, theme)
