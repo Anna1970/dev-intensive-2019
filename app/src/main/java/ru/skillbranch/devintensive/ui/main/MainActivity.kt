@@ -3,6 +3,7 @@ package ru.skillbranch.devintensive.ui.main
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -48,7 +49,7 @@ class MainActivity : BaseActivity() {
             viewModel.addToArchivw(itemId)
             chatAdapter.notifyItemChanged(0)
 
-            Snackbar.make(rv_chat_list, "Вы точно хотите добавить ${it.title} в архиве?", Snackbar.LENGTH_LONG)
+            Snackbar.make(rv_chat_list, "Вы точно хотите добавить ${it.title} в архив?", Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.snackbar_action_no)){
                     viewModel.restoreFromArchive(itemId)
                     chatAdapter.notifyItemChanged(0)
@@ -79,7 +80,22 @@ class MainActivity : BaseActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
+        val searchItem = menu?.findItem(R.id.action_search)
+        val searchView = searchItem?.actionView as SearchView
+        searchView.queryHint = "Введите имя пользователя"
+        searchView.setOnQueryTextListener( object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.handleSearchQuery(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.handleSearchQuery(newText)
+                return true
+            }
+        })
 
         return super.onCreateOptionsMenu(menu)
     }
 }
+

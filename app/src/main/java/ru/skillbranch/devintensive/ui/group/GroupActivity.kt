@@ -108,7 +108,8 @@ class GroupActivity : BaseActivity() {
             setTextColor(Color.WHITE)
         }
 
-        chip.setOnClickListener{viewModel.handleRemoveChip(it.tag.toString())}
+        //chip.setOnClickListener{viewModel.handleRemoveChip(it.tag.toString())}
+        chip.setOnCloseIconClickListener{ viewModel.handleRemoveChip(it.tag.toString())}
         chip_group.addView(chip)
     }
 

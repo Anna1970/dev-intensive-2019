@@ -48,11 +48,12 @@ class GroupViewModel : ViewModel() {
     }
 
     fun handleSearchQuery(text: String?) {
-        query.value = text
+        query.value = text.orEmpty()
     }
 
     fun handleCreateGroup() {
-
+        val items = selectedItems.value.orEmpty()
+        if (items.isNotEmpty()) groupRepository.createChat(items)
     }
 
     private fun loadUsers(): List<UserItem> = groupRepository.loadUsers().map { it.toUserItem() }

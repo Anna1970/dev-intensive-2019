@@ -48,7 +48,8 @@
         android:textColor="@color/color_gray_dark"
         android:textSize="14sp"
         android:layout_toRightOf="@id/tv_message_author"
-        android:layout_below="@id/tv_counter_group"
+        android:layout_toLeftOf="@id/tv_counter_group"
+        android:layout_below="@id/tv_title_group"
         android:layout_marginRight="@dimen/spacing_normal_16"/>
 
     <TextView
