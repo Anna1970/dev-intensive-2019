@@ -28,7 +28,7 @@ class GroupViewModel : ViewModel() {
         result.addSource(userItems) {filterF.invoke()}
         result.addSource(query) {filterF.invoke()}
 
-        return userItems
+        return result
     }
 
     fun getSelectedData() : LiveData<List<UserItem>> = selectedItems
