@@ -1,4 +1,4 @@
-package ru.skillbranch.devintensive.models
+package ru.skillbranch.devintensive.utils
 
 class Bender(var status: Status = Status.NORMAL, var question: Question = Question.NAME) {
 
@@ -35,7 +35,8 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
                         } else{
                                 if (status.equals(Status.CRITICAL)){
                                     status = status.nextStatus()
-                                    question = Question.NAME
+                                    question =
+                                        Question.NAME
                                     "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
                                 } else {
                                     status = status.nextStatus()
@@ -63,28 +64,34 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
 
     enum class Question(val question: String, val answers: List<String>) {
         NAME(question = "Как меня зовут?", answers = listOf("бендер","bender")){
-            override fun nextQuestion(): Question = PROFESSION
+            override fun nextQuestion(): Question =
+                PROFESSION
         },
 
         PROFESSION(question = "Назови мою профессию?", answers = listOf("сгибальщик","bender")){
-            override fun nextQuestion(): Question = MATERIAL
+            override fun nextQuestion(): Question =
+                MATERIAL
         },
 
         MATERIAL(question = "Из чего я сделан?",
                     answers = listOf("металл","дерево","metal","iron","wood")){
-            override fun nextQuestion(): Question = BDAY
+            override fun nextQuestion(): Question =
+                BDAY
         },
 
         BDAY(question = "Когда меня создали?", answers = listOf("2993")){
-            override fun nextQuestion(): Question = SERIAL
+            override fun nextQuestion(): Question =
+                SERIAL
         },
 
         SERIAL(question = "Мой серийный номер?", answers = listOf("2716057")){
-            override fun nextQuestion(): Question = IDLE
+            override fun nextQuestion(): Question =
+                IDLE
         },
 
         IDLE(question = "На этом все, вопросов больше нет", answers = listOf()){
-            override fun nextQuestion(): Question = IDLE
+            override fun nextQuestion(): Question =
+                IDLE
         };
 
         abstract fun  nextQuestion() : Question

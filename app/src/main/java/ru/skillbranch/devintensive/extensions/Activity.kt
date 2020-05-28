@@ -1,18 +1,14 @@
 package ru.skillbranch.devintensive.extensions
 
 import android.app.Activity
-import android.content.ComponentCallbacks
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import ru.skillbranch.devintensive.R
-import ru.skillbranch.devintensive.models.Bender
+import ru.skillbranch.devintensive.utils.Bender
 
 fun Activity.hideKeyboard(activity: Activity){
     try {
